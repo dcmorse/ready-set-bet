@@ -69,10 +69,13 @@ startRacetrack = Racetrack horsesAt0 Nothing
     horsesAt0 = Map.fromList (map (\h->(h,0)) horses)
 
 moveHorse :: Horse -> Racetrack -> Racetrack 
-moveHorse horse (Racetrack progress lastMoved) = Racetrack progress' (Just horse)
+moveHorse horse (Racetrack progress lastMoved) = Racetrack progress' rampageHorse
   where
+    rampageHorse = if justHorse == lastMoved then Nothing else justHorse
     progress' = Map.adjust (+ distance) horse progress
-    distance = 1 + (if (Just horse) == lastMoved then horseRampageBonus horse else 0)
+    distance = 1 + (if justHorse == lastMoved then horseRampageBonus horse else 0)
+    justHorse = (Just horse)
+    
 
 raceIsOver :: Racetrack -> Bool
 raceIsOver racetrack = any (>= 15) $ Map.elems $ progress racetrack
