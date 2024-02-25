@@ -1,9 +1,12 @@
 module Main where
 
-import Racetrack (run,startRacetrack,randomHorses)
+import Racetrack
 
 main :: IO ()
 main = do
-  putStrLn "And they're off!"
-  putStrLn $ show $ run startRacetrack randomHorses
+  putStrLn "FROM START LINE"
+  putStr $ fmtTable $ table 1000 startRacetrack
+  putStrLn "\n\n"
+  putStrLn "AFTER DOUBLE 5s"
+  putStr $ fmtTable $ table 1000 $ moveHorse (Horse 5) $ moveHorse (Horse 5) startRacetrack
   
